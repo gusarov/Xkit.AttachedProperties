@@ -1,21 +1,31 @@
-# Introduction
+# Attached Properties for .NET
 
-This project provides a simple and clean way of adding state to existing object and take care about the state lifetime.
+Add state to any existing object. Control the lifetime of that state with strong or weak references.
 
-## Explanation based on test model:
+- Attach arbitrary values (including references) to any object at runtime.
+- Use simple dynamic syntax: `obj.Attached.SomeProperty = value`.
+- Support composite keys for strong: `obj.Attached[new Key(...)] = value` and weak `obj.AttachedFor(svc1, svc2).Some = value`.
+- Use weak keys to scope state by service, request, or any object lifetime.
 
-`
-class MyClass
-{
-	public string Name { get; set;  }
-}
-var myObject = new MyClass { Name = "Test" };
-`
+> Targets: .NET Standard 2.0, .NET Standard 2.1, .NET 8, .NET 9, .NET 10
+
+## Quick Start
+
+### Test Model
+
+```cs
+	class MyClass
+	{
+		public string Name { get; set;  }
+	}
+	var myObject = new MyClass { Name = "Test" };
+```
 
 ## Strong References
 
 ### Add state to attached properties:
 
+```cs
 myObject.Attached.Age = 25;
 
 // Explanation:
@@ -25,23 +35,29 @@ myObject.Attached.Age = 25;
 Console.WriteLine(myObject.Attached.Age);
 Console.WriteLine(myObject.Attached["Age"]);
 Console.WriteLine(((IDictionary<string, object>)myObject.Attached)["Age"]);
+```
 
 ### Add references to attached properties:
 
+```cs
 var child = new MyClass { Name = "Child" };
 myObject.Attached.Child = child;
 
 // Explanation:
 // now even if you remove all references to child, it will live as long as myObject lives because it also owns the child now and keeps strong reference.
+```
 
 ### Add state by composite or reference key
 
-// does not matter if it value type or reference, think about this as about Dictionary<object, object>. What matters is that the key is unique, comparable and the reference to key is strong.
+Does not matter if it value type or reference, think about this as about Dictionary<object, object>. What matters is that the key is unique, comparable and the reference to key is strong.
+
+```cs
 record /*struct*/ Key(string Name, decimal version, MyClass relation);
 myObject.Attached[new Key("Data", 1.0m, child)] = "Some data";
 
 // Explanation:
 // now even if you remove all references to child or Key, it will live as long as myObject lives because it also owns the key and child now and keeps strong reference.
+```
 
 ### Conclusion
 
@@ -53,21 +69,23 @@ If your objects are ad-hock (e.g. Scoped Service), and you want to keep state on
 
 ### Extend a state per service/object basis by a weak key
 
+```cs
 class MyService
 {
 	public void Handle(MyClass item)
 	{
-		item.Attached(this).Age = 30; // Attached(this) is the way to go!
+		item.AttachedTo(this).Age = 30; // AttachedTo(this) is the way to go!
 	}
 }
 
 // Explanation:
 // now if you remove all references to MyService instance, and let it be collected, the state will be partially removed as well because "this" is considered weak key.
 
-item.Attached(this, new object()).Age = 30;
+item.AttachedTo(this, new object()).Age = 30;
 
 // Explanation:
 // you can have many weak keys per attached state. But all of them, including the item itself are weakReferences. So in this example the state will be lost in a first GC round, because noone hold new object.
+```
 
 ### Conclusion
 
