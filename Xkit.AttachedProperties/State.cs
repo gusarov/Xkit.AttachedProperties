@@ -24,13 +24,13 @@ namespace Xkit.AttachedProperties
 
 		private static readonly MultiKeyNode _rootKey = new MultiKeyNode();
 
-		public static dynamic AttachedTo(object weakKey) => AttachedFor(_rootKey.ThenFor(weakKey));
+		public static dynamic AttachedTo(object weakKey) => AttachedTo(_rootKey.ThenFor(weakKey));
 
-		public static dynamic AttachedTo(params IEnumerable<object> weakKeys) => AttachedFor(_rootKey, weakKeys);
+		public static dynamic AttachedTo(params IEnumerable<object> weakKeys) => AttachedTo(_rootKey, weakKeys);
 
-		internal static dynamic AttachedTo(object firstWeakKey, params IEnumerable<object> weakKeys) => AttachedFor(_rootKey.ThenFor(firstWeakKey), weakKeys);
+		internal static dynamic AttachedTo(object firstWeakKey, params IEnumerable<object> weakKeys) => AttachedTo(_rootKey.ThenFor(firstWeakKey), weakKeys);
 
-		private static dynamic AttachedFor(MultiKeyNode current, params IEnumerable<object> weakKeys)
+		private static dynamic AttachedTo(MultiKeyNode current, params IEnumerable<object> weakKeys)
 		{
 			if (weakKeys is IReadOnlyList<object> keysList)
 			{

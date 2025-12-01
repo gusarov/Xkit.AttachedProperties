@@ -93,7 +93,9 @@ If you think about it, attached state is like Dictionary<object, object> but the
 
 To highlight that idea and philosofy even more, check out the root static method:
 
-Xkit.AttachedProperties.GetFor(params IEnumerable<object> weakKeys)
+```cs
+Xkit.AttachedProperties.State.AttachedTo(params IEnumerable<object> weakKeys)
+```
 
 This explains that `.Attached` extension property is just a convention for State.AttachedTo(this)
 
