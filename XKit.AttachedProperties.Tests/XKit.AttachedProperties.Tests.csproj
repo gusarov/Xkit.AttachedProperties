@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Xkit.AttachedProperties\Xkit.AttachedProperties.csproj" />
+    <ProjectReference Include="..\XKit.AttachedProperties\XKit.AttachedProperties.csproj" />
   </ItemGroup>
 
   <ItemGroup>

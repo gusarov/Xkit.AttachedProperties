@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="XKit.AttachedProperties.Tests/XKit.AttachedProperties.Tests.csproj" />
+  <Project Path="XKit.AttachedProperties/XKit.AttachedProperties.csproj" />
+</Solution>

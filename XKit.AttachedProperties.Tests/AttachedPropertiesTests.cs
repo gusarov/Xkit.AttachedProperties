@@ -1,12 +1,12 @@
 ﻿using System.Data;
 using System.Diagnostics;
-using Xkit;
+using XKit;
 
-using Xkit.AttachedProperties;
-using Xkit.AttachedProperties.Extensions.Attached;
-using Xkit.AttachedProperties.Extensions.AttachedTo;
+using XKit.AttachedProperties;
+using XKit.AttachedProperties.Extensions.Attached;
+using XKit.AttachedProperties.Extensions.AttachedTo;
 
-namespace Xkit.Tests;
+namespace XKit.Tests;
 
 [NonParallelizable]
 public class AttachedPropertiesTests

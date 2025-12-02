@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Dynamic;
 using System.Runtime.CompilerServices;
 
-namespace Xkit.AttachedProperties
+namespace XKit.AttachedProperties
 {
 
 	public static class State
